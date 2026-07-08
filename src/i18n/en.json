@@ -223,6 +223,7 @@
         "cmd_description_unsub_all": "Unsubscribe from all subscriptions",
         "cmd_description_list": "Check the subscription list",
         "cmd_description_set": "Customize subscriptions",
+        "cmd_description_set_filter": "Set keyword filters",
         "cmd_description_set_default": "Customize default settings",
         "cmd_description_import": "Import subscriptions from an OPML file",
         "cmd_description_export": "Export subscriptions to an OPML file",
