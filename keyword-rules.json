@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "description": "Shared RSS subscriptions and one default keyword filter for materials paper alerts.",
+  "default": {
+    "include": [
+      "CuCrZr",
+      "Cu-Cr-Zr",
+      "CuCrNb",
+      "copper alloy",
+      "Cu alloy",
+      "copper matrix",
+      "graphene",
+      "rGO",
+      "reduced graphene oxide",
+      "carbon nanotube",
+      "CNT",
+      "metal matrix composite",
+      "heterostructured",
+      "heterogeneous structure",
+      "gradient structure",
+      "bimodal",
+      "back stress",
+      "HDI",
+      "GND",
+      "dislocation",
+      "precipitation",
+      "aging",
+      "ageing",
+      "electrical conductivity",
+      "thermal conductivity",
+      "ODS",
+      "oxide dispersion strengthened",
+      "HfO2",
+      "hafnia",
+      "irradiation",
+      "radiation",
+      "radiation damage",
+      "fusion",
+      "divertor",
+      "plasma facing",
+      "additive manufacturing",
+      "LPBF",
+      "laser powder bed fusion",
+      "selective laser melting",
+      "SLM",
+      "interface",
+      "interfacial",
+      "grain boundary",
+      "recrystallization",
+      "texture",
+      "EBSD",
+      "TEM",
+      "APT",
+      "DFT",
+      "first principles",
+      "molecular dynamics"
+    ],
+    "exclude": [
+      "battery",
+      "batteries",
+      "lithium",
+      "sodium ion",
+      "electrode",
+      "anode",
+      "cathode",
+      "supercapacitor",
+      "photocatalysis",
+      "catalyst",
+      "oxygen evolution",
+      "hydrogen evolution",
+      "CO2 reduction",
+      "drug delivery",
+      "biomedical",
+      "perovskite",
+      "solar cell",
+      "photovoltaic",
+      "polymer",
+      "epoxy",
+      "cement",
+      "concrete",
+      "adsorption",
+      "water treatment"
+    ],
+    "fields": [
+      "title",
+      "summary"
+    ],
+    "mode": "any"
+  },
+  "subscriptions": [
+    {
+      "title": "Nature Materials",
+      "url": "https://www.nature.com/nmat.rss"
+    },
+    {
+      "title": "Communications Materials",
+      "url": "https://www.nature.com/commsmat.rss"
+    },
+    {
+      "title": "Nature Communications",
+      "url": "https://www.nature.com/ncomms.rss"
+    },
+    {
+      "title": "Science Advances",
+      "url": "https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=sciadv"
+    },
+    {
+      "title": "Acta Materialia",
+      "url": "https://rss.sciencedirect.com/publication/science/13596454"
+    },
+    {
+      "title": "Scripta Materialia",
+      "url": "https://rss.sciencedirect.com/publication/science/13596462"
+    },
+    {
+      "title": "Materials Science and Engineering A",
+      "url": "https://rss.sciencedirect.com/publication/science/09215093"
+    },
+    {
+      "title": "Materials Characterization",
+      "url": "https://rss.sciencedirect.com/publication/science/10445803"
+    },
+    {
+      "title": "Carbon",
+      "url": "https://rss.sciencedirect.com/publication/science/00086223"
+    },
+    {
+      "title": "Composites Part B",
+      "url": "https://rss.sciencedirect.com/publication/science/13598368"
+    }
+  ]
+}

@@ -5,6 +5,8 @@
 
 <p align="center"><b>A Telegram RSS bot that cares about your reading experience</b></p>
 
+> Fork note: this branch adds a lightweight per-subscription keyword filter for journal feeds and other RSS sources. See [Keyword Filter](docs/keyword-filter.md) and [Task Spec](docs/TASK_KEYWORD_FILTER.md). Upstream RSStT still handles RSS fetching, subscription management, formatting, and Telegram delivery.
+
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Rongronggg9/RSS-to-Telegram-Bot?logo=git&label=commit)](https://github.com/Rongronggg9/RSS-to-Telegram-Bot/commits)
 [![Translating status](https://img.shields.io/weblate/progress/rss-to-telegram-bot?logo=weblate&color=informational)](https://hosted.weblate.org/engage/rss-to-telegram-bot/)
 [![Code quality](https://img.shields.io/codefactor/grade/github/Rongronggg9/RSS-to-Telegram-Bot?logo=codefactor)](https://www.codefactor.io/repository/github/rongronggg9/rss-to-telegram-bot)
@@ -58,6 +60,7 @@
     - Messages can be sent as Telegraph posts (customizable)
 - [Various customizable formatting settings](docs/formatting-settings.md)
     - Hashtags, custom title, etc.
+- Per-subscription keyword filters with `/set_filter` in this fork
 - Individual proxy settings for Telegram and RSS feeds
 - OPML importing and exporting (keep custom title)
 - Optimized performance (see also the [FAQ](docs/FAQ.md#q-how-is-the-performance-of-the-bot))

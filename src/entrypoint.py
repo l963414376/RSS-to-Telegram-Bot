@@ -149,6 +149,8 @@ async def pre():
                           events.NewMessage(pattern=construct_remote_command_matcher('/set')))
     bot.add_event_handler(command.customization.cmd_set_default,
                           events.NewMessage(pattern=construct_remote_command_matcher('/set_default')))
+    bot.add_event_handler(command.filter.cmd_set_filter,
+                          events.NewMessage(pattern=construct_remote_command_matcher('/set_filter')))
     bot.add_event_handler(command.opml.opml_import,
                           command.utils.NewFileMessage(pattern=rf'.*?{bare_target_matcher}?',
                                                        filename_pattern=r'^.*\.opml$'))
