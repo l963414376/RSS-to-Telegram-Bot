@@ -25,7 +25,7 @@ from traceback import format_exc
 
 from ._common import logger, TIMEOUT
 from ._stat import NotifierStat
-from .. import db, env, web
+from .. import db, env, web, keyword_filter
 from ..command import inner
 from ..command.utils import default_leave_chat_helper, escape_html
 from ..compat import nullcontext
@@ -168,7 +168,7 @@ class Notifier:
     async def _notify_sub_with_entry_idx(self, idx: int, sub: db.Sub) -> None:
         async with self._get_post_lock[idx]:
             post = await self._get_post(idx)
-        if post:
+        if post and await keyword_filter.post_matches_filter(sub, post):
             await self._do_send(sub, post)
 
     async def _notify_sub(self, sub: db.Sub) -> None:
