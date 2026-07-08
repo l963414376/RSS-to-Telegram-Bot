@@ -1,0 +1,37 @@
+# Local development environments
+.venv/
+venv/
+env/
+.env
+config/
+
+# Python cache and test artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Build and packaging outputs
+build/
+dist/
+*.egg-info/
+
+# Editor and OS metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Runtime logs and databases
+*.log
+*.sqlite
+*.sqlite3
+
+# Docker Compose local overrides
+docker-compose.yml
+docker-compose.override.yml

@@ -2,7 +2,11 @@
 
 This fork adds a lightweight keyword filter on top of RSStT. It does **not** rebuild the RSS bot. RSStT still handles RSS fetching, polling, deduplication, subscription management, message formatting, media handling, OPML import/export, and Telegram delivery.
 
-The filter is per subscription: one RSS subscription can have one rule. If a subscription has no rule, it keeps the upstream behavior and sends every new entry.
+The filter supports a global default rule and per-subscription overrides:
+
+- If a subscription has its own rule, that rule is used.
+- If a subscription has no rule, the global default rule is used.
+- If neither exists, upstream behavior is kept and every new entry is sent.
 
 ## Basic workflow
 
@@ -18,6 +22,12 @@ Set a keyword filter:
 /set_filter https://www.nature.com/nmat.rss include=CuCrZr|ODS|graphene copper exclude=battery|catalysis fields=title,summary mode=any
 ```
 
+Set the global default keyword filter:
+
+```text
+/set_filter default include=CuCrZr|oxide dispersion strengthened exclude=battery|catalysis fields=title,summary
+```
+
 For reliability, you can also use the subscription ID shown in `/list` or `/set` pages:
 
 ```text
@@ -28,12 +38,14 @@ Show the current filter:
 
 ```text
 /set_filter 123
+/set_filter default
 ```
 
 Clear the filter:
 
 ```text
 /set_filter 123 off
+/set_filter default off
 ```
 
 ## Rule fields
@@ -106,6 +118,7 @@ Key format:
 
 ```text
 keyword_filter:<sub_id>
+keyword_filter:default
 ```
 
 Value format: JSON string.

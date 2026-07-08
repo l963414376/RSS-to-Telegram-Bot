@@ -23,6 +23,7 @@ if TYPE_CHECKING:
 logger = log.getLogger('RSStT.keyword_filter')
 
 OPTION_KEY_PREFIX = 'keyword_filter:'
+DEFAULT_OPTION_KEY = f'{OPTION_KEY_PREFIX}default'
 DEFAULT_FIELDS = ('title', 'summary')
 VALID_FIELDS = frozenset(('title', 'summary', 'content', 'author', 'tags', 'link'))
 VALID_MODES = frozenset(('any', 'all'))
@@ -62,6 +63,10 @@ def option_key(sub_id: int) -> str:
     return f'{OPTION_KEY_PREFIX}{sub_id}'
 
 
+def default_option_key() -> str:
+    return DEFAULT_OPTION_KEY
+
+
 def _normalize_terms(value: Any) -> tuple[str, ...]:
     if value is None:
         return ()
@@ -98,8 +103,8 @@ def _normalize_fields(value: Any) -> tuple[str, ...]:
     return tuple(fields) or DEFAULT_FIELDS
 
 
-async def get_filter(sub_id: int) -> Optional[KeywordFilterRule]:
-    option = await db.Option.get_or_none(key=option_key(sub_id))
+async def _get_filter_by_key(key: str, label: str) -> Optional[KeywordFilterRule]:
+    option = await db.Option.get_or_none(key=key)
     if option is None or not option.value:
         return None
     try:
@@ -108,9 +113,27 @@ async def get_filter(sub_id: int) -> Optional[KeywordFilterRule]:
             raise TypeError('keyword filter option value must be a JSON object')
         rule = KeywordFilterRule.from_mapping(data)
     except Exception as e:
-        logger.warning(f'Failed to parse keyword filter for sub {sub_id}', exc_info=e)
+        logger.warning(f'Failed to parse keyword filter for {label}', exc_info=e)
         return None
     return None if rule.is_empty else rule
+
+
+async def get_filter(sub_id: int) -> Optional[KeywordFilterRule]:
+    return await _get_filter_by_key(option_key(sub_id), f'sub {sub_id}')
+
+
+async def get_default_filter() -> Optional[KeywordFilterRule]:
+    return await _get_filter_by_key(default_option_key(), 'default')
+
+
+async def get_effective_filter(sub_id: int) -> tuple[Optional[KeywordFilterRule], str]:
+    sub_rule = await get_filter(sub_id)
+    if sub_rule is not None:
+        return sub_rule, 'subscription'
+    default_rule = await get_default_filter()
+    if default_rule is not None:
+        return default_rule, 'default'
+    return None, 'none'
 
 
 async def set_filter(sub_id: int, rule: KeywordFilterRule) -> None:
@@ -125,6 +148,20 @@ async def set_filter(sub_id: int, rule: KeywordFilterRule) -> None:
 
 async def clear_filter(sub_id: int) -> None:
     await db.Option.filter(key=option_key(sub_id)).delete()
+
+
+async def set_default_filter(rule: KeywordFilterRule) -> None:
+    if rule.is_empty:
+        await clear_default_filter()
+        return
+    await db.Option.update_or_create(
+        defaults={'value': json.dumps(rule.to_dict(), ensure_ascii=False)},
+        key=default_option_key(),
+    )
+
+
+async def clear_default_filter() -> None:
+    await db.Option.filter(key=default_option_key()).delete()
 
 
 def _strip_html(value: str) -> str:
@@ -186,12 +223,12 @@ def matches_rule(rule: KeywordFilterRule, post: 'Post') -> bool:
 
 async def post_matches_filter(sub: db.Sub, post: 'Post') -> bool:
     try:
-        rule = await get_filter(sub.id)
+        rule, source = await get_effective_filter(sub.id)
         if rule is None:
             return True
         matched = matches_rule(rule, post)
         if not matched:
-            logger.debug(f'Post {post.link} skipped by keyword filter of sub {sub.id}')
+            logger.debug(f'Post {post.link} skipped by {source} keyword filter of sub {sub.id}')
         return matched
     except Exception as e:
         logger.error(f'Keyword filter failed for sub {sub.id}; sending post without filtering', exc_info=e)
