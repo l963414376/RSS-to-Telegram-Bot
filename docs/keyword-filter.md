@@ -16,7 +16,7 @@ Subscribe to a feed as usual:
 /sub https://www.nature.com/nmat.rss
 ```
 
-Set a keyword filter:
+Set a keyword filter for one subscription:
 
 ```text
 /set_filter https://www.nature.com/nmat.rss include=CuCrZr|ODS|graphene copper exclude=battery|catalysis fields=title,summary mode=any
@@ -79,6 +79,8 @@ Format:
 
 If a subscription's `filter` is empty or omitted, it uses the global default rule.
 
+Important: editing `keyword-rules.json` in GitHub records your desired RSS list and keyword rule, but the running bot still uses rules stored in its database. Apply the global rule in Telegram with `/set_filter default ...`, or add an import command in a later version.
+
 ## Rule fields
 
 A rule contains:
@@ -124,7 +126,7 @@ The matching is intentionally simple:
 
 - case insensitive
 - ordinary terms use substring matching
-- HTML tags are removed before matching
+- HTML tags are are removed before matching
 - Unicode is preserved
 - multiple terms are separated by `|`
 - terms beginning with `re:` are treated as regular expressions
@@ -171,8 +173,8 @@ This keeps RSS fetching, entry hashing, polling, formatting, and Telegram sendin
 This feature does not implement:
 
 - subscription groups or folders
-- global default keyword rules
 - web UI
 - semantic matching or LLM relevance scoring
 - automatic RSS discovery beyond upstream RSStT behavior
+- automatic import from `keyword-rules.json` into the running bot database
 - paper digest formatting
