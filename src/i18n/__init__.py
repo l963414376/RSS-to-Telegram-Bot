@@ -38,8 +38,8 @@ NEED_PRE_FILL = {
         ('https://github.com/Rongronggg9/RSS-to-Telegram-Bot/blob/dev/docs/formatting-settings.md',),
 }
 
-COMMANDS = ('sub', 'unsub', 'unsub_all', 'list', 'set', 'set_default', 'import', 'export', 'activate_subs',
-            'deactivate_subs', 'version', 'help', 'lang')
+COMMANDS = ('sub', 'unsub', 'unsub_all', 'list', 'set', 'set_filter', 'set_default', 'import', 'export',
+            'activate_subs', 'deactivate_subs', 'version', 'help', 'lang')
 MANAGER_COMMANDS = ('test', 'set_option', 'user_info')
 REQUIRED_KEYS = {istr('lang_code'), istr('lang_native_name'), istr('select_lang_prompt')}
 
