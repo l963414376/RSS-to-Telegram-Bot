@@ -48,6 +48,37 @@ Clear the filter:
 /set_filter default off
 ```
 
+## Rule import file
+
+This fork keeps a tracked template file at [`keyword-rules.json`](../keyword-rules.json). You can edit it directly on GitHub and use it as the source of truth for RSS URLs and keyword rules.
+
+Format:
+
+```json
+{
+  "default": {
+    "include": ["CuCrZr", "ODS"],
+    "exclude": ["battery"],
+    "fields": ["title", "summary"],
+    "mode": "any"
+  },
+  "subscriptions": [
+    {
+      "url": "https://www.nature.com/nmat.rss",
+      "title": "Nature Materials",
+      "filter": {
+        "include": ["graphene copper"],
+        "exclude": ["catalysis"],
+        "fields": ["title", "summary"],
+        "mode": "any"
+      }
+    }
+  ]
+}
+```
+
+If a subscription's `filter` is empty or omitted, it uses the global default rule.
+
 ## Rule fields
 
 A rule contains:

@@ -1,0 +1,31 @@
+{
+  "default": {
+    "include": [],
+    "exclude": [],
+    "fields": [
+      "title",
+      "summary"
+    ],
+    "mode": "any"
+  },
+  "subscriptions": [
+    {
+      "url": "https://example.com/feed.xml",
+      "title": "",
+      "filter": {
+        "include": [
+          "keyword one",
+          "keyword two"
+        ],
+        "exclude": [
+          "skip keyword"
+        ],
+        "fields": [
+          "title",
+          "summary"
+        ],
+        "mode": "any"
+      }
+    }
+  ]
+}
