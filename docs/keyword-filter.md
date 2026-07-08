@@ -1,57 +1,49 @@
-# Keyword Filter for Academic and Journal Feeds
+# Keyword Filter
 
-This fork is intended to add a lightweight keyword filter on top of RSStT instead of rebuilding an RSS to Telegram bot from scratch.
+This fork adds a lightweight keyword filter on top of RSStT. It does **not** rebuild the RSS bot. RSStT still handles RSS fetching, polling, deduplication, subscription management, message formatting, media handling, OPML import/export, and Telegram delivery.
 
-## Goal
+The filter is per subscription: one RSS subscription can have one rule. If a subscription has no rule, it keeps the upstream behavior and sends every new entry.
 
-A user can subscribe to any RSS feed supported by RSStT and optionally attach keyword rules to that subscription. New entries are only sent to Telegram when they match the rule.
+## Basic workflow
 
-Typical use cases:
-
-- journal latest article RSS feeds
-- Articles in Press feeds
-- RSSHub generated feeds
-- website feeds that already expose RSS or Atom
-- cross field alerts such as materials science, semiconductors, energy, biology, medicine, AI, economics, or any custom topic
-
-## Non goals
-
-This fork should not reimplement the existing RSStT core features:
-
-- RSS and Atom fetching
-- Telegram delivery
-- subscription management
-- OPML import and export
-- HTTP caching
-- media handling
-- message formatting
-- deduplication and polling
-
-Those remain upstream RSStT responsibilities.
-
-## Minimal feature design
-
-The first implementation should add only one layer before Telegram sending:
+Subscribe to a feed as usual:
 
 ```text
-new RSS entry
-    ↓
-RSStT parses entry into Post
-    ↓
-keyword filter checks title, summary/content, author, tags, and link
-    ↓
-matched: send to Telegram
-not matched: skip silently
+/sub https://www.nature.com/nmat.rss
 ```
 
-## Rule model
+Set a keyword filter:
 
-Each subscription can have one keyword filter. A filter contains:
+```text
+/set_filter https://www.nature.com/nmat.rss include=CuCrZr|ODS|graphene copper exclude=battery|catalysis fields=title,summary mode=any
+```
+
+For reliability, you can also use the subscription ID shown in `/list` or `/set` pages:
+
+```text
+/set_filter 123 include=CuCrZr|oxide dispersion strengthened exclude=battery|catalysis fields=title,summary
+```
+
+Show the current filter:
+
+```text
+/set_filter 123
+```
+
+Clear the filter:
+
+```text
+/set_filter 123 off
+```
+
+## Rule fields
+
+A rule contains:
 
 ```json
 {
-  "include": ["CuCrZr", "high strength copper", "oxide dispersion strengthened"],
-  "exclude": ["lithium battery", "electrocatalysis", "photocatalysis"],
+  "include": ["CuCrZr", "oxide dispersion strengthened"],
+  "exclude": ["battery", "catalysis"],
   "fields": ["title", "summary"],
   "mode": "any"
 }
@@ -59,28 +51,40 @@ Each subscription can have one keyword filter. A filter contains:
 
 Meaning:
 
-- `include`: at least one term must match when present.
-- `exclude`: if any term matches, the entry is skipped.
-- `fields`: which Post fields are searched.
-- `mode`: `any` means any include term is enough; `all` means all include terms must match.
+- `include`: white list terms. If non empty, at least one term must match when `mode=any`; all terms must match when `mode=all`.
+- `exclude`: black list terms. If any exclude term matches, the entry is skipped. Exclude has higher priority than include.
+- `fields`: the fields to search.
+- `mode`: `any` or `all` for include matching.
 
-Recommended default fields:
+## Supported fields
 
 ```text
-title, summary
+title
+summary
+content
+author
+tags
+link
 ```
 
-For academic feeds, title plus summary is usually enough. Full content matching can create noisy alerts.
+Default fields are:
+
+```text
+title,summary
+```
+
+In the first implementation, `summary` and `content` both use `Post.html` internally.
 
 ## Matching rules
 
-The matching should be deliberately simple:
+The matching is intentionally simple:
 
 - case insensitive
-- HTML tags removed before matching
-- Unicode preserved
-- terms separated by `|`
-- terms beginning with `re:` treated as regular expressions
+- ordinary terms use substring matching
+- HTML tags are removed before matching
+- Unicode is preserved
+- multiple terms are separated by `|`
+- terms beginning with `re:` are treated as regular expressions
 
 Examples:
 
@@ -90,93 +94,41 @@ high strength copper
 re:\bCu[- ]?Cr[- ]?Zr\b
 ```
 
-## Telegram command proposal
+The regex example can match `CuCrZr`, `Cu-Cr-Zr`, and `Cu Cr Zr`.
 
-Use one command:
+Bad regex terms are ignored and logged as warnings. They do not crash the bot.
 
-```text
-/set_filter <feed_url_or_sub_id> include=term1|term2 exclude=term3|term4 fields=title,summary mode=any
-```
+## Storage
 
-Examples:
+The first implementation avoids database schema migrations. Rules are stored in the existing `option` table.
 
-```text
-/set_filter https://www.nature.com/nmat.rss include=CuCrZr|oxide dispersion strengthened|graphene copper exclude=battery|catalysis fields=title,summary mode=any
-```
-
-Clear a filter:
+Key format:
 
 ```text
-/set_filter https://www.nature.com/nmat.rss off
+keyword_filter:<sub_id>
 ```
 
-Show current filter:
+Value format: JSON string.
 
-```text
-/set_filter https://www.nature.com/nmat.rss
-```
+## Implementation note
 
-## Storage strategy
-
-Avoid schema migrations at first. Store per subscription filters in the existing `option` table with keys like:
-
-```text
-keyword_filter:SUB_ID
-```
-
-Value is JSON.
-
-This keeps the change small and avoids touching the upstream `sub` table schema. If the feature proves stable, it can later be migrated to a first class `Sub.keyword_filter` field.
-
-## Best insertion point
-
-The safest insertion point is `src/monitor/_notifier.py`.
-
-Current flow:
-
-```text
-Notifier._notify_sub_with_entry_idx
-    → Notifier._get_post
-    → Notifier._do_send
-    → Notifier._send
-```
-
-Add the filter check after `_get_post()` returns a `Post` and before `_do_send()`.
-
-Pseudo code:
+The filter is applied in `src/monitor/_notifier.py`, after RSStT parses an entry into `Post` and before Telegram sending:
 
 ```python
 post = await self._get_post(idx)
-if post and await keyword_filter.matches(sub, post):
+if post and await keyword_filter.post_matches_filter(sub, post):
     await self._do_send(sub, post)
 ```
 
-This avoids changing feed fetching, entry hashing, polling, and Telegram formatting.
+This keeps RSS fetching, entry hashing, polling, formatting, and Telegram sending untouched.
 
-## User workflow
+## Non goals
 
-1. Deploy RSStT normally.
-2. Add a feed:
+This feature does not implement:
 
-```text
-/sub https://www.nature.com/nmat.rss
-```
-
-3. Attach keywords:
-
-```text
-/set_filter https://www.nature.com/nmat.rss include=CuCrZr|ODS|graphene copper exclude=battery|catalysis fields=title,summary
-```
-
-4. New matching entries are pushed to Telegram. Non matching entries are skipped.
-
-## What the user still needs to do
-
-The user only needs to provide:
-
-- Telegram bot token from BotFather
-- Telegram user ID for manager setup
-- RSS feed URLs or website URLs that can be converted through RSSHub
-- keyword lists
-
-All code changes should stay in this fork.
+- subscription groups or folders
+- global default keyword rules
+- web UI
+- semantic matching or LLM relevance scoring
+- automatic RSS discovery beyond upstream RSStT behavior
+- paper digest formatting
