@@ -1,0 +1,305 @@
+{
+  "version": 1,
+  "description": "Journal source list for paper alerts. ScienceDirect sources use RSSHub routes. Subscribe the rsshub_url from RSStT when RSSHub runs in the same Docker Compose network.",
+  "rsshub_base_internal": "http://rsshub:1200",
+  "rsshub_base_external_example": "http://YOUR_SERVER_IP:1200",
+  "notes": [
+    "For ScienceDirect, prefer articles_in_press first because it tracks newly available accepted papers.",
+    "Use current_issue only when you also want the latest assigned volume or issue. It may duplicate articles that first appeared in articles_in_press.",
+    "Nature, Science, ACS, and arXiv entries use their official RSS feeds where available."
+  ],
+  "journals": [
+    {
+      "title": "Acta Materialia",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "acta-materialia",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/acta-materialia/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/acta-materialia",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/acta-materialia",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/acta-materialia/current",
+      "topics": ["metallurgy", "alloys", "deformation", "interfaces", "precipitation", "irradiation"]
+    },
+    {
+      "title": "Scripta Materialia",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "scripta-materialia",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/scripta-materialia/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/scripta-materialia",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/scripta-materialia",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/scripta-materialia/current",
+      "topics": ["metallurgy", "alloys", "microstructure", "rapid communications"]
+    },
+    {
+      "title": "Materials Science and Engineering A",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "materials-science-and-engineering-a",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/materials-science-and-engineering-a/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/materials-science-and-engineering-a",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/materials-science-and-engineering-a",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/materials-science-and-engineering-a/current",
+      "topics": ["mechanical properties", "metallic materials", "strength", "ductility"]
+    },
+    {
+      "title": "Materials Characterization",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "materials-characterization",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/materials-characterization/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/materials-characterization",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/materials-characterization",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/materials-characterization/current",
+      "topics": ["TEM", "EBSD", "APT", "microstructure", "characterization"]
+    },
+    {
+      "title": "Materials & Design",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "materials-and-design",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/materials-and-design/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/materials-and-design",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/materials-and-design",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/materials-and-design/current",
+      "topics": ["materials design", "alloys", "processing", "properties"]
+    },
+    {
+      "title": "Additive Manufacturing",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "additive-manufacturing",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/additive-manufacturing/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/additive-manufacturing",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/additive-manufacturing",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/additive-manufacturing/current",
+      "topics": ["additive manufacturing", "LPBF", "SLM", "DED", "metal printing"]
+    },
+    {
+      "title": "International Journal of Plasticity",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "international-journal-of-plasticity",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/international-journal-of-plasticity/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/international-journal-of-plasticity",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/international-journal-of-plasticity",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/international-journal-of-plasticity/current",
+      "topics": ["plasticity", "deformation", "dislocation", "constitutive modeling"]
+    },
+    {
+      "title": "Journal of Nuclear Materials",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "journal-of-nuclear-materials",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/journal-of-nuclear-materials/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/journal-of-nuclear-materials",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/journal-of-nuclear-materials",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/journal-of-nuclear-materials/current",
+      "topics": ["nuclear materials", "irradiation", "radiation damage", "fusion materials"]
+    },
+    {
+      "title": "Nuclear Materials and Energy",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "nuclear-materials-and-energy",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/nuclear-materials-and-energy/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/nuclear-materials-and-energy",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/nuclear-materials-and-energy",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/nuclear-materials-and-energy/current",
+      "topics": ["fusion", "plasma facing materials", "divertor", "irradiation"]
+    },
+    {
+      "title": "Fusion Engineering and Design",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "medium",
+      "science_direct_id": "fusion-engineering-and-design",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/fusion-engineering-and-design/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/fusion-engineering-and-design",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/fusion-engineering-and-design",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/fusion-engineering-and-design/current",
+      "topics": ["fusion engineering", "divertor", "plasma facing components", "heat sink"]
+    },
+    {
+      "title": "Progress in Materials Science",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "medium",
+      "science_direct_id": "progress-in-materials-science",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/progress-in-materials-science/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/progress-in-materials-science",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/progress-in-materials-science",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/progress-in-materials-science/current",
+      "topics": ["review", "materials science", "metals", "alloys"]
+    },
+    {
+      "title": "Journal of Alloys and Compounds",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "medium",
+      "science_direct_id": "journal-of-alloys-and-compounds",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/journal-of-alloys-and-compounds/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/journal-of-alloys-and-compounds",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/journal-of-alloys-and-compounds",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/journal-of-alloys-and-compounds/current",
+      "topics": ["alloys", "intermetallics", "metallic materials"]
+    },
+    {
+      "title": "Computational Materials Science",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "medium",
+      "science_direct_id": "computational-materials-science",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/computational-materials-science/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/computational-materials-science",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/computational-materials-science",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/computational-materials-science/current",
+      "topics": ["DFT", "molecular dynamics", "phase field", "materials modeling"]
+    },
+    {
+      "title": "Carbon",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "high",
+      "science_direct_id": "carbon",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/carbon/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/carbon",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/carbon",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/carbon/current",
+      "topics": ["graphene", "carbon nanotube", "carbon materials", "copper matrix composites"]
+    },
+    {
+      "title": "Composites Part B: Engineering",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "medium",
+      "science_direct_id": "composites-part-b-engineering",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/composites-part-b-engineering/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/composites-part-b-engineering",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/composites-part-b-engineering",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/composites-part-b-engineering/current",
+      "topics": ["composites", "metal matrix composites", "graphene composites"]
+    },
+    {
+      "title": "Composites Science and Technology",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "medium",
+      "science_direct_id": "composites-science-and-technology",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/composites-science-and-technology/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/composites-science-and-technology",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/composites-science-and-technology",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/composites-science-and-technology/current",
+      "topics": ["composites", "interfaces", "graphene", "metal matrix composites"]
+    },
+    {
+      "title": "Intermetallics",
+      "publisher": "Elsevier",
+      "source_type": "sciencedirect_rsshub",
+      "priority": "medium",
+      "science_direct_id": "intermetallics",
+      "articles_in_press_url": "https://www.sciencedirect.com/journal/intermetallics/articles-in-press",
+      "latest_issue_url": "https://www.sciencedirect.com/journal/intermetallics",
+      "rsshub_url": "http://rsshub:1200/sciencedirect/journal/intermetallics",
+      "rsshub_current_url": "http://rsshub:1200/sciencedirect/journal/intermetallics/current",
+      "topics": ["intermetallics", "ordered alloys", "high temperature materials"]
+    },
+    {
+      "title": "Nature Materials",
+      "publisher": "Springer Nature",
+      "source_type": "official_rss",
+      "priority": "high",
+      "rss_url": "https://www.nature.com/nmat.rss",
+      "topics": ["materials science", "high impact"]
+    },
+    {
+      "title": "Communications Materials",
+      "publisher": "Springer Nature",
+      "source_type": "official_rss",
+      "priority": "high",
+      "rss_url": "https://www.nature.com/commsmat.rss",
+      "topics": ["materials science", "open access"]
+    },
+    {
+      "title": "Nature Communications",
+      "publisher": "Springer Nature",
+      "source_type": "official_rss",
+      "priority": "medium",
+      "rss_url": "https://www.nature.com/ncomms.rss",
+      "topics": ["multidisciplinary", "materials science"]
+    },
+    {
+      "title": "Nature Reviews Materials",
+      "publisher": "Springer Nature",
+      "source_type": "official_rss",
+      "priority": "medium",
+      "rss_url": "https://www.nature.com/natrevmats.rss",
+      "topics": ["review", "materials science"]
+    },
+    {
+      "title": "npj Computational Materials",
+      "publisher": "Springer Nature",
+      "source_type": "official_rss",
+      "priority": "medium",
+      "rss_url": "https://www.nature.com/npjcompumats.rss",
+      "topics": ["computational materials", "DFT", "machine learning"]
+    },
+    {
+      "title": "npj Materials Degradation",
+      "publisher": "Springer Nature",
+      "source_type": "official_rss",
+      "priority": "medium",
+      "rss_url": "https://www.nature.com/npjmatdeg.rss",
+      "topics": ["degradation", "corrosion", "radiation", "materials aging"]
+    },
+    {
+      "title": "Science Advances",
+      "publisher": "AAAS",
+      "source_type": "official_rss",
+      "priority": "medium",
+      "rss_url": "https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=sciadv",
+      "topics": ["multidisciplinary", "materials science"]
+    },
+    {
+      "title": "ACS Nano",
+      "publisher": "ACS",
+      "source_type": "official_rss",
+      "priority": "low",
+      "rss_url": "https://pubs.acs.org/action/showFeed?type=etoc&feed=rss&jc=ancac3",
+      "topics": ["nanomaterials", "graphene", "carbon nanotubes"]
+    },
+    {
+      "title": "Nano Letters",
+      "publisher": "ACS",
+      "source_type": "official_rss",
+      "priority": "low",
+      "rss_url": "https://pubs.acs.org/action/showFeed?type=etoc&feed=rss&jc=nalefd",
+      "topics": ["nanomaterials", "interfaces"]
+    },
+    {
+      "title": "Chemistry of Materials",
+      "publisher": "ACS",
+      "source_type": "official_rss",
+      "priority": "low",
+      "rss_url": "https://pubs.acs.org/action/showFeed?type=etoc&feed=rss&jc=cmatex",
+      "topics": ["materials chemistry", "nanomaterials"]
+    },
+    {
+      "title": "arXiv Materials Science",
+      "publisher": "arXiv",
+      "source_type": "official_rss",
+      "priority": "low",
+      "rss_url": "https://rss.arxiv.org/rss/cond-mat.mtrl-sci",
+      "topics": ["preprint", "materials science"]
+    }
+  ]
+}
